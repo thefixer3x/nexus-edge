@@ -1,3 +1,4 @@
+
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.21.0'
 
@@ -86,6 +87,26 @@ async function storeImage(imageUrl: string, path: string) {
     
     // Convert image to array buffer
     const imageArrayBuffer = await imageResponse.arrayBuffer()
+    
+    // Create the bucket if it doesn't exist
+    try {
+      const { data: buckets } = await supabase.storage.getBucket('apple-store-images')
+      if (!buckets) {
+        await supabase.storage.createBucket('apple-store-images', {
+          public: true
+        })
+        console.log('Created bucket: apple-store-images')
+      }
+    } catch (error) {
+      if (error.message.includes('does not exist')) {
+        await supabase.storage.createBucket('apple-store-images', {
+          public: true
+        })
+        console.log('Created bucket: apple-store-images')
+      } else {
+        console.error('Error checking/creating bucket:', error)
+      }
+    }
     
     // Upload to Supabase storage
     const { data, error } = await supabase
@@ -184,7 +205,7 @@ serve(async (req) => {
 
       case 'store':
         const storeResult = await storeImage(imageUrl, storagePath)
-        return new Response(JSON.stringify(storeResult), {
+        return new Response(JSON.stringify({ url: storeResult }), {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         })
 
@@ -198,7 +219,7 @@ serve(async (req) => {
     console.error('Edge function error:', error)
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
     })
   }
 })

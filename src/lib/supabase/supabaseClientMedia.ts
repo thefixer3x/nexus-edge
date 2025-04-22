@@ -1,8 +1,10 @@
-import { createClient } from '@supabase/supabase-js'
 
-// Media-specific Supabase client
-const supabaseUrl = import.meta.env.VITE_APP_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_APP_SUPABASE_ANON_KEY
+import { createClient } from '@supabase/supabase-js'
+import { supabase } from '@/integrations/supabase/client'
+
+// Media-specific Supabase client using the same credentials as our main client
+const supabaseUrl = "https://rsabczhfeehazuyajarx.supabase.co"
+const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzYWJjemhmZWVoYXp1eWFqYXJ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI1NjY2MTEsImV4cCI6MjA1ODE0MjYxMX0.UldOcr7qhvX6Wa77fGoB8pkHOgv8HulcMsX_zULttNI"
 
 export const supabaseMedia = createClient(supabaseUrl, supabaseAnonKey)
 

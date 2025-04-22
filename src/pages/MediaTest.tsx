@@ -12,6 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Info } from 'lucide-react';
 
 export const MediaTest = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -59,12 +60,28 @@ export const MediaTest = () => {
 
   return (
     <div className="container mx-auto p-6 space-y-6">
-      <Card>
+      <Card className="bg-blue-50/50">
         <CardHeader>
-          <CardTitle>Media Service Test Interface</CardTitle>
-          <CardDescription>Test Shutterstock API integration and storage functionality</CardDescription>
+          <CardTitle className="flex items-center gap-2">
+            <Info className="w-6 h-6 text-blue-600" />
+            Media Service Test Guide
+          </CardTitle>
+          <CardDescription>
+            This interface allows you to explore and interact with our media search and storage capabilities.
+          </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 bg-white rounded-b-lg p-6">
+          <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded">
+            <h3 className="font-semibold text-yellow-700 mb-2">How to Use:</h3>
+            <ol className="list-decimal list-inside text-yellow-800 space-y-2">
+              <li>Enter a search term in the input field (e.g., "Apple", "Landscape", "Technology")</li>
+              <li>Click "Search Images" for general image results</li>
+              <li>Click "Search Products" for product-specific image results</li>
+              <li>Browse the images that appear</li>
+              <li>Click "Store Image" on any image to save it to our media storage</li>
+            </ol>
+          </div>
+
           <div className="flex gap-4">
             <Input
               placeholder="Enter search query..."

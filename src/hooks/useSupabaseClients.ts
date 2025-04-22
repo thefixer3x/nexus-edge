@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { supabaseAuth, getCurrentUser } from '@/lib/supabase/supabaseClientAuth'
 import { supabaseApp, getAppData } from '@/lib/supabase/supabaseClientApp'
+import { supabaseMedia } from '@/lib/supabase/supabaseClientMedia'
 import type { User } from '@supabase/supabase-js'
 
 export const useSupabaseClients = () => {
@@ -33,6 +34,7 @@ export const useSupabaseClients = () => {
     user,
     appData,
     authClient: supabaseAuth,
-    appClient: supabaseApp
+    appClient: supabaseApp,
+    mediaClient: supabaseMedia
   }
 }

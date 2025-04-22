@@ -8,7 +8,7 @@ const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
 
 export const supabaseMedia = createClient(supabaseUrl, supabaseAnonKey)
 
-// Interface for image search options
+// Enhanced interface for image search options
 interface SearchOptions {
   image_type?: string[];
   orientation?: string;
@@ -17,6 +17,9 @@ interface SearchOptions {
   per_page?: number;
   sort?: string;
   view?: string;
+  people_model_released?: boolean;
+  safe?: boolean;
+  commercial?: boolean;
 }
 
 // Interface for image search results
@@ -29,17 +32,31 @@ interface ImageSearchResult {
 }
 
 /**
- * Search for images using the Shutterstock API
+ * Search for images using the Shutterstock API with comprehensive parameters
  */
 export const searchImages = async (
   query: string, 
-  options?: SearchOptions
+  options: SearchOptions = {}
 ): Promise<ImageSearchResult> => {
   try {
+    // Merge default and user-provided options
+    const defaultOptions: SearchOptions = {
+      image_type: ['photo'],
+      orientation: 'square',
+      per_page: 10,
+      sort: 'relevance',
+      view: 'full',
+      aspect_ratio: 1,
+      people_model_released: true,
+      safe: true,
+      commercial: true,
+      ...options
+    }
+
     const { data, error } = await supabaseMedia.functions.invoke('shutterstock-api', {
       body: { 
         query,
-        options,
+        options: defaultOptions,
         action: 'search'
       }
     })

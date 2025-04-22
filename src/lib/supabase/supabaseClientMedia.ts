@@ -1,8 +1,7 @@
 
 import { createClient } from '@supabase/supabase-js'
 
-// Media-specific Supabase client (using the same project as app client for now)
-// In the future, this could be moved to a dedicated media services project
+// Media-specific Supabase client
 const supabaseUrl = import.meta.env.VITE_APP_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_APP_SUPABASE_ANON_KEY
 
@@ -30,10 +29,6 @@ interface ImageSearchResult {
 
 /**
  * Search for images using the Shutterstock API
- * 
- * @param query Search term
- * @param options Additional search parameters
- * @returns Image search results
  */
 export const searchImages = async (
   query: string, 
@@ -43,10 +38,9 @@ export const searchImages = async (
     const { data, error } = await supabaseMedia.functions.invoke('shutterstock-api', {
       body: { 
         query,
-        options
-      },
-      method: 'POST',
-      path: '/search',
+        options,
+        action: 'search'
+      }
     })
     
     if (error) throw error
@@ -59,18 +53,16 @@ export const searchImages = async (
 
 /**
  * Search for product-specific images
- * 
- * @param productName Name of the product
- * @returns Image search results
  */
 export const searchProductImages = async (
   productName: string
 ): Promise<ImageSearchResult> => {
   try {
     const { data, error } = await supabaseMedia.functions.invoke('shutterstock-api', {
-      body: { productName },
-      method: 'POST',
-      path: '/product-images',
+      body: { 
+        productName,
+        action: 'product-search'
+      }
     })
     
     if (error) throw error
@@ -82,49 +74,23 @@ export const searchProductImages = async (
 }
 
 /**
- * Find similar images using computer vision
- * 
- * @param imageUrl URL of the image to use as reference
- * @returns Similar image results
- */
-export const getSimilarImages = async (
-  imageUrl: string
-): Promise<ImageSearchResult> => {
-  try {
-    const { data, error } = await supabaseMedia.functions.invoke('shutterstock-api', {
-      body: { imageUrl },
-      method: 'POST',
-      path: '/similar',
-    })
-    
-    if (error) throw error
-    return data
-  } catch (error) {
-    console.error('Error finding similar images:', error)
-    throw error
-  }
-}
-
-/**
  * Store an image in Supabase storage
- * 
- * @param imageUrl URL of the image to store
- * @param path Storage path
- * @returns Storage operation result
  */
 export const storeImage = async (
   imageUrl: string,
-  path: string
-): Promise<any> => {
+  storagePath: string
+): Promise<string> => {
   try {
     const { data, error } = await supabaseMedia.functions.invoke('shutterstock-api', {
-      body: { imageUrl, path },
-      method: 'POST',
-      path: '/store',
+      body: { 
+        imageUrl, 
+        storagePath,
+        action: 'store'
+      }
     })
     
     if (error) throw error
-    return data
+    return data.url
   } catch (error) {
     console.error('Error storing image:', error)
     throw error
@@ -133,18 +99,14 @@ export const storeImage = async (
 
 /**
  * Get a stored image URL
- * 
- * @param path Storage path of the image
- * @returns Public URL of the image
  */
-export const getStoredImageUrl = async (path: string): Promise<string> => {
+export const getStoredImageUrl = async (storagePath: string): Promise<string> => {
   try {
-    const { data, error } = await supabaseMedia
+    const { data } = await supabaseMedia
       .storage
       .from('apple-store-images')
-      .getPublicUrl(path)
+      .getPublicUrl(storagePath)
     
-    if (error) throw error
     return data.publicUrl
   } catch (error) {
     console.error('Error getting stored image URL:', error)

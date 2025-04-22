@@ -1,6 +1,5 @@
-
 import { useState, useEffect } from 'react';
-import { searchProductImages, getStoredImageUrl } from '@/lib/supabase/supabaseClientMedia';
+import { searchProductImages, getStoredImageUrl, storeImage } from '@/lib/supabase/supabaseClientMedia';
 
 interface UseImageOptions {
   useCache?: boolean;
@@ -42,7 +41,6 @@ export const useImage = (
               return;
             }
           } catch (cacheError) {
-            // Cache miss, continue to API search
             console.log('No cached image found, searching Shutterstock');
           }
         }
@@ -61,11 +59,9 @@ export const useImage = (
               await storeImage(image.assets.preview.url, `products/${productId}`);
             } catch (storeError) {
               console.error('Failed to cache image:', storeError);
-              // Non-critical error, we can still display the image
             }
           }
         } else {
-          // No results found, use fallback
           setImageUrl(fallbackUrl);
         }
       } catch (fetchError) {

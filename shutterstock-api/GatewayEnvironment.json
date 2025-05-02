@@ -1,0 +1,92 @@
+{
+  "id": "a5b7d78a-7f6d-4ae3-8ef3-bff9f8b6188e",
+  "name": "Gateway Environment",
+  "values": [
+    {
+      "key": "host",
+      "value": "Enter your host address",
+      "enabled": true
+    },
+    {
+      "key": "merchantId",
+      "value": "Enter your merchant ID",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "currency",
+      "value": "Enter your currency",
+      "enabled": true
+    },
+    {
+      "key": "fpan",
+      "value": "5123456789012346",
+      "enabled": true
+    },
+    {
+      "key": "expMonth",
+      "value": "01",
+      "enabled": true
+    },
+    {
+      "key": "expYear",
+      "value": "39",
+      "enabled": true
+    },
+    {
+      "key": "securityCode",
+      "value": "123",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "fpanAdditional",
+      "value": "5123450000000008",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "expMonthAdditional",
+      "value": "11",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "expYearAdditional",
+      "value": "42",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "authorizationCode",
+      "value": "abc123",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "giftCardNumber",
+      "value": "6035335024103174",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "costcoGiftCardNumber",
+      "value": "6100000000000001",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "costcoCardPin",
+      "value": "96492195",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "apiPassword",
+      "value": "3dca46a5586049f28a3afdbfd100cf5d",
+      "type": "default",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}

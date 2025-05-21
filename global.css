@@ -1,0 +1,53 @@
+global.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    /* ... other CSS variables */
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    /* ... dark mode variables */
+  }
+}
+
+/* Cursor styles */
+.cursor-dot {
+  @apply w-2 h-2 bg-primary rounded-full fixed pointer-events-none z-50;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+  transition: transform 0.1s ease;
+}
+
+.cursor-outline {
+  @apply w-10 h-10 border border-primary rounded-full fixed pointer-events-none z-50;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+  transition: all 0.3s ease-out;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Optional: Scroll snap */
+/* .scroll-container {
+  scroll-snap-type: y proximity;
+}
+
+.scroll-section {
+  scroll-snap-align: start;
+} */
+
+/* Modern focus styles */
+*:focus-visible {
+  @apply outline-none ring-2 ring-primary ring-offset-2;
+}

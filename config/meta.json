@@ -1,0 +1,15 @@
+{
+  "description": "Lovable Generated Project",
+  "author": "Lovable",
+  "og": {
+    "title": "loveable-auth-hub-connect",
+    "description": "Lovable Generated Project",
+    "type": "website",
+    "image": "https://lovable.dev/opengraph-image-p98pqg.png"
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "site": "@lovable_dev",
+    "image": "https://lovable.dev/opengraph-image-p98pqg.png"
+  }
+}

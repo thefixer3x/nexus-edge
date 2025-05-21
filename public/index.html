@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Modern meta tags for better sharing -->
+    <meta name="theme-color" content="#3B82F6" />
+    <meta name="description" content="AI-powered modern marketplace with personalized shopping experience" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Nexus | AI-Powered Marketplace" />
+    <meta property="og:description" content="Discover products with AI assistance" />
+    
+    <title>Nexus | AI-Powered Marketplace</title>
+    
+    <!-- Preload important resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" 
+      rel="stylesheet"
+    >
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  </head>
+  <body class="min-h-screen bg-background font-sans antialiased">
+    <div id="root"></div>
+    
+    <!-- Cursor elements -->
+    <div id="cursor-dot" class="cursor-dot fixed rounded-full pointer-events-none z-50"></div>
+    <div id="cursor-outline" class="cursor-outline fixed rounded-full pointer-events-none z-50"></div>
+    
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

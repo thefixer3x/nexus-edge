@@ -1,4 +1,3 @@
-
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.21.0'
 
@@ -203,3 +202,7 @@ serve(async (req) => {
     })
   }
 })
+
+export * from './client';
+export * from './types';
+export * from './config';

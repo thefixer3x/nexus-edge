@@ -1,4 +1,4 @@
-import { initPayPal } from './config.js';
+import { loadPayPalScript } from './config.js';
 
 export default function mount(container) {
   container.innerHTML = `
@@ -24,8 +24,8 @@ export default function mount(container) {
     </div>
   `;
 
-  // Initialize PayPal
-  initPayPal(document.getElementById('paypal-button-container'));
+  // Load PayPal script
+  loadPayPalScript();
 
   // Handle settings
   document.getElementById('paypal-settings').addEventListener('submit', (e) => {

@@ -7,7 +7,7 @@ import { AIChatSupport } from '@/components/AIChatSupport';
 import { AIProductRecommendations } from '@/components/AIProductRecommendations';
 import { AISettingsSuggestion } from '@/components/AISettingsSuggestion';
 
-export default function ProductListing() {
+const ProductListing = () => {
   const user = useUserStore((state) => state.user);
   const [products, setProducts] = useState<any[]>([]);
 
@@ -23,6 +23,14 @@ export default function ProductListing() {
   return (
     <div className="max-w-7xl mx-auto py-16">
       <h1 className="text-3xl font-bold mb-4">Product Listing</h1>
+      <div className="flex items-center gap-2 mb-4">
+        <Badge variant="outline">All Products</Badge>
+        <Badge variant="outline">Development Tools</Badge>
+        <Badge variant="outline">AI Assistants</Badge>
+      </div>
+      <p className="text-muted-foreground mb-8">
+        This is a placeholder for the Product Listing page.
+      </p>
       <div className="mb-8">
         <AIProductRecommendations userId={user?.id} />
         <AISettingsSuggestion />
@@ -59,4 +67,6 @@ export default function ProductListing() {
       <AIChatSupport />
     </div>
   );
-}
+};
+
+export default ProductListing;

@@ -1,12 +1,15 @@
-import create from 'zustand';
-import { User } from '@/types';
+import { create } from 'zustand';
 
 interface UserState {
-  user: User | null;
-  setUser: (user: User | null) => void;
+  isLoggedIn: boolean;
+  userProfile: { name: string; email: string } | null;
+  login: (user: { name: string; email: string }) => void;
+  logout: () => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
-  user: null,
-  setUser: (user) => set({ user }),
+  isLoggedIn: false,
+  userProfile: null,
+  login: (user) => set({ isLoggedIn: true, userProfile: user }),
+  logout: () => set({ isLoggedIn: false, userProfile: null }),
 }));

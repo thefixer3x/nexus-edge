@@ -7,16 +7,7 @@ export interface PaymentRequest {
   };
   sourceOfFunds?: {
     type: string;
-    provided?: {
-      card?: {
-        number: string;
-        expiry: {
-          month: string;
-          year: string;
-        };
-        securityCode?: string;
-      }
-    }
+    token?: string; // Add token field for tokenized payments
   };
   session?: {
     id: string;

@@ -1,73 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { LayoutDashboard, ListChecks, Settings, PlusCircle, ChevronLeft, ChevronRight, X, Info, Activity, FileText, Layers } from 'lucide-react';
+import React from 'react';
 
-// --- Data Structures ---
-interface Item {
-  id: string;
-  name: string;
-  description: string;
-  status: 'pending' | 'in-progress' | 'completed';
-  createdAt: Date;
+function WorkspaceInterface() {
+  return (
+    <div className="p-4">
+      <h1>Workspace Interface</h1>
+      <p>Coming soon...</p>
+    </div>
+  );
 }
 
-interface Module {
-  id: string;
-  name: string;
-  icon: React.ElementType;
-  overviewContent: React.ReactNode;
-  items: Item[];
-  settings: { [key: string]: any };
-}
-
-// --- Initial Data ---
-const initialModules: Module[] = [
-  {
-    id: 'mod1',
-    name: 'Project Alpha',
-    icon: Layers,
-    overviewContent: <div className="p-4 bg-gray-700 rounded-lg shadow">
-                       <h3 className="text-lg font-semibold text-teal-300 mb-2">Alpha Overview</h3>
-                       <p className="text-gray-300">This is the primary project focusing on core development. Currently in Phase 2.</p>
-                       <div className="mt-3 flex space-x-2">
-                           <span className="px-2 py-0.5 bg-teal-600 text-xs rounded-full">Development</span>
-                           <span className="px-2 py-0.5 bg-blue-600 text-xs rounded-full">Frontend</span>
-                       </div>
-                     </div>,
-    items: [
-      { id: 'item1_1', name: 'Setup Initial Structure', description: 'Create the basic folder and file structure for the project.', status: 'completed', createdAt: new Date(Date.now() - 86400000 * 2) },
-      { id: 'item1_2', name: 'Design API Endpoints', description: 'Define all necessary API endpoints and data schemas.', status: 'in-progress', createdAt: new Date(Date.now() - 86400000 * 1) },
-    ],
-    settings: { notifications: true, theme: 'dark', collaborators: ['Alice', 'Bob'] },
-  },
-  {
-    id: 'mod2',
-    name: 'Marketing Campaign',
-    icon: Activity,
-    overviewContent: <div className="p-4 bg-gray-700 rounded-lg shadow">
-                        <h3 className="text-lg font-semibold text-pink-300 mb-2">Campaign Insights</h3>
-                        <p className="text-gray-300">Upcoming Q3 marketing initiative. Focus on social media and content creation.</p>
-                         <div className="mt-3 flex space-x-2">
-                           <span className="px-2 py-0.5 bg-pink-600 text-xs rounded-full">Social Media</span>
-                           <span className="px-2 py-0.5 bg-indigo-600 text-xs rounded-full">Content</span>
-                       </div>
-                      </div>,
-    items: [
-      { id: 'item2_1', name: 'Draft Social Media Calendar', description: 'Plan posts for the next month.', status: 'pending', createdAt: new Date() },
-    ],
-    settings: { budget: 5000, targetAudience: 'Tech Enthusiasts' },
-  },
-  {
-    id: 'mod3',
-    name: 'Knowledge Base',
-    icon: FileText,
-    overviewContent: <div className="p-4 bg-gray-700 rounded-lg shadow">
-                        <h3 className="text-lg font-semibold text-yellow-300 mb-2">Documentation Central</h3>
-                        <p className="text-gray-300">Repository for all internal and external documentation.</p>
-                      </div>,
-    items: [],
-    settings: { accessLevel: 'internal', lastUpdatedBy: 'System' },
-  },
-];
+export default WorkspaceInterface;
 
 // --- Main Component ---
 const WorkspaceInterface = () => {

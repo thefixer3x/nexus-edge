@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Code Review - Nexus Edge</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/swagger-ui.css">
+</head>
+<body>
+    <nav>
+        <h1>Nexus Edge</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/code-review">Code Review</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h2>Code Review</h2>
+        <section id="repo-import">
+            <h3>Import Local Repository</h3>
+            <form action="/import-repo" method="POST" enctype="multipart/form-data">
+                <div>
+                    <label for="repo-path">Repository Path:</label>
+                    <input type="text" id="repo-path" name="repo-path" placeholder="/path/to/repository">
+                </div>
+                <div>
+                    <label for="repo-dir">Or Select Repository:</label>
+                    <input type="file" id="repo-dir" name="repo-dir" webkitdirectory directory multiple>
+                </div>
+                <button type="submit">Import Repository</button>
+            </form>
+        </section>
+        
+        <section id="api-specs">
+            <h3>API Specifications Review</h3>
+            <div id="swagger-ui"></div>
+        </section>
+        
+        <div id="repo-files"></div>
+        <form action="/review" method="POST">
+            <div>
+                <label for="spec-type">Specification Type:</label>
+                <select id="spec-type" name="spec-type">
+                    <option value="code">Code</option>
+                    <option value="openapi">OpenAPI Specification</option>
+                </select>
+            </div>
+            <div>
+                <label for="code">Code:</label>
+                <textarea id="code" name="code" required></textarea>
+            </div>
+            <div>
+                <label for="context">Context (optional):</label>
+                <textarea id="context" name="context"></textarea>
+            </div>
+            <button type="submit">Get Review</button>
+        </form>
+        <div id="result"></div>
+    </main>
+    <script src="/static/swagger-ui-bundle.js"></script>
+    <script src="/static/swagger-ui-standalone-preset.js"></script>
+    <script src="/static/review.js"></script>
+</body>
+</html>

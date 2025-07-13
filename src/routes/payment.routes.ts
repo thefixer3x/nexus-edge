@@ -6,7 +6,8 @@ const paymentController = new PaymentController();
 
 router.post('/checkout', async (req, res) => {
   try {
-    const response = await paymentController.initiateCheckout(req.body);
+    const { amount, currency, gatewayType } = req.body;
+    const response = await paymentController.initiateCheckout(amount, currency, gatewayType);
     res.json(response);
   } catch (error) {
     res.status(400).json(error);
@@ -15,9 +16,11 @@ router.post('/checkout', async (req, res) => {
 
 router.post('/process/:orderId', async (req, res) => {
   try {
+    const { payerId, gatewayType } = req.body;
     const response = await paymentController.processPayment(
       req.params.orderId,
-      req.body
+      payerId,
+      gatewayType
     );
     res.json(response);
   } catch (error) {
@@ -25,12 +28,17 @@ router.post('/process/:orderId', async (req, res) => {
   }
 });
 
-router.get('/order/:orderId', async (req, res) => {
+router.post('/webhook', async (req, res) => {
   try {
-    const response = await paymentController.retrieveOrder(req.params.orderId);
-    res.json(response);
+    await paymentController.handleWebhook(req, res); // Pass req and res directly
   } catch (error) {
-    res.status(400).json(error);
+    console.error('Error processing webhook:', error);
+    // The handleWebhook method now sends the response, so we don't need to send it here.
+    // However, if an unexpected error occurs before handleWebhook can send a response,
+    // we should still send a 500.
+    if (!res.headersSent) {
+      res.status(500).send('Internal Server Error during webhook processing');
+    }
   }
 });
 

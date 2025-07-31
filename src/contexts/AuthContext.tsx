@@ -1,32 +1,20 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, ReactNode } from 'react';
 import { User, SignupData, AuthContextProps } from '@/types';
+import { useUser } from '@stackframe/stack';
 import { stackClientApp } from '@/stack';
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const stackUser = useUser();
 
-  // Stack auth state listener
-  useEffect(() => {
-    const unsubscribe = stackClientApp.useUser((stackUser) => {
-      if (stackUser) {
-        // Map Stack user to your User type
-        setUser({
-          id: stackUser.id,
-          email: stackUser.primaryEmail || '',
-          name: stackUser.displayName || undefined,
-          avatar: stackUser.profileImageUrl || undefined,
-        });
-      } else {
-        setUser(null);
-      }
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
+  // Convert Stack user to our User type
+  const user: User | null = stackUser ? {
+    id: stackUser.id,
+    email: stackUser.primaryEmail || '',
+    name: stackUser.displayName || undefined,
+    avatar: stackUser.profileImageUrl || undefined,
+  } : null;
 
   const login = async (email: string, password: string) => {
     await stackClientApp.signInWithCredential({ email, password });
@@ -42,11 +30,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const logout = async () => {
-    await stackClientApp.signOut();
+    if (stackUser) {
+      await stackUser.signOut();
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, signup, logout }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      loading: false, // Stack handles loading internally
+      login, 
+      signup, 
+      logout 
+    }}>
       {children}
     </AuthContext.Provider>
   );

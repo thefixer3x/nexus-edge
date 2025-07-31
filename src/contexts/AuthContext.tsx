@@ -1,14 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { User } from '@/types';
-import { auth } from '@/lib/firebase'; // If using Firebase
-
-interface AuthContextProps {
-  user: User | null;
-  loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  signup: (data: SignupData) => Promise<void>;
-  logout: () => Promise<void>;
-}
+import { User, SignupData, AuthContextProps } from '@/types';
+import { stackClientApp } from '@/stack';
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
@@ -16,13 +8,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Firebase auth state listener
+  // Stack auth state listener
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
-      if (firebaseUser) {
-        // Map firebase user to your User type
+    const unsubscribe = stackClientApp.useUser((stackUser) => {
+      if (stackUser) {
+        // Map Stack user to your User type
         setUser({
-          // ...other fields
+          id: stackUser.id,
+          email: stackUser.primaryEmail || '',
+          name: stackUser.displayName || undefined,
+          avatar: stackUser.profileImageUrl || undefined,
         });
       } else {
         setUser(null);
@@ -34,17 +29,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = async (email: string, password: string) => {
-    await auth.signInWithEmailAndPassword(email, password);
+    await stackClientApp.signInWithCredential({ email, password });
   };
 
   const signup = async (data: SignupData) => {
     const { email, password, name } = data;
-    const cred = await auth.createUserWithEmailAndPassword(email, password);
-    await cred.user?.updateProfile({ displayName: name });
+    await stackClientApp.signUpWithCredential({ 
+      email, 
+      password,
+      displayName: name 
+    });
   };
 
   const logout = async () => {
-    await auth.signOut();
+    await stackClientApp.signOut();
   };
 
   return (

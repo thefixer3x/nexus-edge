@@ -10,6 +10,7 @@ import { Suspense } from 'react';
 import AppRoutes from './routes/index.tsx';
 import { StackProvider, StackTheme } from '@stackframe/stack';
 import { stackClientApp } from './stack';
+import { AuthProvider } from './contexts/AuthContext';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,17 +30,19 @@ const LoadingFallback = () => (
 const App = () => (
   <StackProvider app={stackClientApp}>
     <StackTheme>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Suspense fallback={<LoadingFallback />}>
-              <AppRoutes />
-            </Suspense>
-          </BrowserRouter>
-        </TooltipProvider>
-      </QueryClientProvider>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Suspense fallback={<LoadingFallback />}>
+                <AppRoutes />
+              </Suspense>
+            </BrowserRouter>
+          </TooltipProvider>
+        </QueryClientProvider>
+      </AuthProvider>
     </StackTheme>
   </StackProvider>
 );

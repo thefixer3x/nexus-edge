@@ -3,6 +3,8 @@ import { User } from '@/types';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
+import { updateUserProfile } from '@/lib/api';
+import { toast } from 'sonner';
 
 interface EditProfileFormProps {
   user: User;
@@ -14,17 +16,18 @@ export function EditProfileForm({ user }: EditProfileFormProps) {
     email: user.email,
   });
   const [loading, setLoading] = useState(false);
-  const { } = useAuth();
 
   const handleUpdateProfile = async () => {
     setLoading(true);
     try {
-      // TODO: Update user profile via API
-      // This would typically call your backend API to update the user profile
-      console.log('Updating profile:', form);
-      // await updateUserProfile(user.id, form);
+      await updateUserProfile(user.id, {
+        name: form.name,
+        email: form.email,
+      });
+      toast.success('Profile updated successfully');
     } catch (error) {
       console.error('Error updating profile:', error);
+      toast.error('Failed to update profile');
     } finally {
       setLoading(false);
     }

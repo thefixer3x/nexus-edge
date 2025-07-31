@@ -1,7 +1,8 @@
-import { createContext, useContext, ReactNode } from 'react';
+import { createContext, useContext, ReactNode, useEffect } from 'react';
 import { User, SignupData, AuthContextProps } from '@/types';
 import { useUser } from '@stackframe/stack';
 import { stackClientApp } from '@/stack';
+import { supabase } from '@/integrations/supabase/client';
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
@@ -15,6 +16,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     name: stackUser.displayName || undefined,
     avatar: stackUser.profileImageUrl || undefined,
   } : null;
+
+  // Sync user data with Supabase when Stack user changes
+  useEffect(() => {
+    const syncUserWithSupabase = async () => {
+      if (stackUser) {
+        // Upsert user profile in Supabase
+        const { error } = await supabase
+          .from('profiles')
+          .upsert({
+            id: stackUser.id,
+            email: stackUser.primaryEmail,
+            name: stackUser.displayName,
+            avatar_url: stackUser.profileImageUrl,
+            updated_at: new Date().toISOString(),
+          });
+        
+        if (error) {
+          console.error('Error syncing user with Supabase:', error);
+        }
+      }
+    };
+
+    syncUserWithSupabase();
+  }, [stackUser]);
 
   const login = async (email: string, password: string) => {
     await stackClientApp.signInWithCredential({ email, password });

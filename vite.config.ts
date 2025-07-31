@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
-// Enable more detailed error reporting
 
 export default defineConfig({
   root: '.', // Set the root to the current directory
@@ -12,6 +11,11 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  define: {
+    // Define global variables for the browser
+    global: 'globalThis',
+    'process.env': {},
+  },
   server: {
     hmr: {
       overlay: true
@@ -20,4 +24,9 @@ export default defineConfig({
     host: true,
     port: 3000
   },
+  optimizeDeps: {
+    // Force re-bundling of problematic dependencies
+    force: true,
+    include: ['@stackframe/stack']
+  }
 });

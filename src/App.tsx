@@ -8,9 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
 import { Suspense } from 'react';
 import AppRoutes from './routes/index.tsx';
-import { StackProvider, StackTheme } from '@stackframe/stack';
-import { stackClientApp } from './stack';
-import { AuthProvider } from './contexts/AuthContext';
+import { SupabaseAuthProvider } from './contexts/SupabaseAuthContext';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,23 +26,19 @@ const LoadingFallback = () => (
 );
 
 const App = () => (
-  <StackProvider app={stackClientApp}>
-    <StackTheme>
-      <AuthProvider>
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Suspense fallback={<LoadingFallback />}>
-                <AppRoutes />
-              </Suspense>
-            </BrowserRouter>
-          </TooltipProvider>
-        </QueryClientProvider>
-      </AuthProvider>
-    </StackTheme>
-  </StackProvider>
+  <SupabaseAuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Suspense fallback={<LoadingFallback />}>
+            <AppRoutes />
+          </Suspense>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </SupabaseAuthProvider>
 );
 
 export default App;

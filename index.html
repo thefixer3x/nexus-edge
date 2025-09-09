@@ -2,104 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>loveable-auth-hub-connect</title>
-    
-    <!-- Load Meta Configuration -->
-    <script type="module">
-      import meta from './config/meta.json' assert { type: 'json' };
-      document.querySelector('meta[name="description"]').content = meta.description;
-      document.querySelector('meta[name="author"]').content = meta.author;
-      // ... and so on for other meta tags
-    </script>
-
-    <!-- Integrations -->
-    <script type="module" src="./integrations/paypal/config.js"></script>
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="./assets/styles/main.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <meta name="description" content="Nexus Edge - AI-Powered E-commerce Marketplace" />
+    <title>Nexus Edge - AI Marketplace</title>
   </head>
   <body>
-    <nav class="integrations-nav">
-      <h2>Integration Editor</h2>
-      <div class="editor-controls">
-        <button id="add-editor">Add Editor</button>
-        <button id="clear-editors">Clear All</button>
-      </div>
-      <ul id="integration-list">
-        <li><a href="#paypal" data-integration="paypal">PayPal Integration</a></li>
-        <li><a href="#stripe" data-integration="stripe">Stripe Integration</a></li>
-        <li><a href="#google" data-integration="google">Google Auth</a></li>
-        <li><a href="#facebook" data-integration="facebook">Facebook Login</a></li>
-        <li><a href="#twitter" data-integration="twitter">Twitter Auth</a></li>
-      </ul>
-    </nav>
-
-    <main>
-      <div id="root">
-        <div id="editors-container" class="multi-editor-view"></div>
-      </div>
-    </main>
-
-    <!-- Integration Router -->
-    <script type="module">
-      const editorsContainer = document.getElementById('editors-container');
-      let activeEditors = new Set();
-
-      const createEditorView = async (integration) => {
-        const editorDiv = document.createElement('div');
-        editorDiv.className = 'editor-panel';
-        editorDiv.innerHTML = '<div class="editor-header">' +
-          `<h3>${integration}</h3>` +
-          '<button class="close-editor">×</button></div>' +
-          '<div class="editor-content"></div>';
-        
-        editorsContainer.appendChild(editorDiv);
-        const contentDiv = editorDiv.querySelector('.editor-content');
-        
-        try {
-          const module = await import(`./integrations/${integration}/interface.js`);
-          module.default(contentDiv);
-        } catch (err) {
-          contentDiv.innerHTML = `<div class="error-message">Failed to load ${integration}</div>`;
-        }
-
-        editorDiv.querySelector('.close-editor').onclick = () => {
-          editorDiv.remove();
-          activeEditors.delete(integration);
-        };
-      };
-
-      const handleRoute = async (event) => {
-        const hash = window.location.hash.slice(1);
-        if (!hash) return;
-        
-        if (!activeEditors.has(hash)) {
-          activeEditors.add(hash);
-          await createEditorView(hash);
-        }
-      };
-
-      document.getElementById('add-editor').onclick = () => {
-        const integration = prompt('Enter integration name:');
-        if (integration) {
-          window.location.hash = integration;
-        }
-      };
-
-      document.getElementById('clear-editors').onclick = () => {
-        editorsContainer.innerHTML = '';
-        activeEditors.clear();
-        window.location.hash = '';
-      };
-
-      window.addEventListener('hashchange', handleRoute);
-      window.addEventListener('load', handleRoute);
-    </script>
-
-    <!-- Core Scripts -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

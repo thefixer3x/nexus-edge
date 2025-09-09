@@ -1,0 +1,154 @@
+{
+  "toolSets": {
+    "aiThinking": {
+      "tools": [
+        "repl",
+        "perplexity-ask",
+        "analyze_issue_with_seer"
+      ],
+      "description": "Sequential thinking, analysis, and AI-powered problem solving",
+      "icon": "brain",
+      "priority": "high"
+    },
+    "webSearch": {
+      "tools": [
+        "web_search",
+        "web_fetch",
+        "perplexity-ask"
+      ],
+      "description": "Web search and content fetching with Perplexity integration",
+      "icon": "search",
+      "priority": "high"
+    },
+    "browserAutomation": {
+      "tools": [
+        "Chrome (AppleScript)",
+        "puppeteer",
+        "osascript"
+      ],
+      "description": "Browser automation, testing, and macOS system control",
+      "icon": "globe",
+      "priority": "medium"
+    },
+    "21stDevTools": {
+      "tools": [
+        "@21st-dev/magic:21st_magic_component_builder",
+        "@21st-dev/magic:logo_search",
+        "@21st-dev/magic:21st_magic_component_inspiration",
+        "@21st-dev/magic:21st_magic_component_refiner"
+      ],
+      "description": "Modern UI component generation, logo search, and design refinement",
+      "icon": "magic",
+      "priority": "high",
+      "category": "development"
+    },
+    "contextManagement": {
+      "tools": [
+        "context7:resolve-library-id",
+        "context7:get-library-docs",
+        "google_drive_search",
+        "google_drive_fetch"
+      ],
+      "description": "Context retrieval, documentation lookup, and knowledge management",
+      "icon": "book",
+      "priority": "medium",
+      "category": "research"
+    },
+    "webDevelopment": {
+      "tools": [
+        "artifacts",
+        "supabase-mcp-server",
+        "github-mcp-server",
+        "stripe"
+      ],
+      "description": "Full-stack development with React, TypeScript, and modern frameworks",
+      "icon": "code",
+      "priority": "high",
+      "category": "development"
+    },
+    "deployment": {
+      "tools": [
+        "Canva",
+        "Vercel",
+        "Netlify",
+        "Supabase"
+      ],
+      "description": "Design assets, hosting, and backend services deployment",
+      "icon": "cloud",
+      "priority": "medium",
+      "category": "deployment"
+    },
+    "productivity": {
+      "tools": [
+        "Clickup",
+        "Sentry",
+        "iMessage",
+        "Zapier"
+      ],
+      "description": "Project management, monitoring, communication, and automation",
+      "icon": "tools",
+      "priority": "medium",
+      "category": "productivity"
+    },
+    "filesystem": {
+      "tools": [
+        "Filesystem:read_file",
+        "Filesystem:write_file",
+        "Filesystem:edit_file",
+        "Filesystem:search_files"
+      ],
+      "description": "File system operations for local development",
+      "icon": "folder",
+      "priority": "high",
+      "category": "development"
+    },
+    "aiAssistance": {
+      "tools": [
+        "mcp__perplexity-ask__perplexity_ask",
+        "mcp___21st-dev_magic__21st_magic_component_builder",
+        "mcp___21st-dev_magic__logo_search",
+        "mcp__lingodotdev__translate"
+      ],
+      "description": "Advanced AI assistance, translation, and intelligent content generation",
+      "icon": "sparkles",
+      "priority": "high",
+      "category": "ai"
+    },
+    "ecommerce": {
+      "tools": [
+        "mcp__stripe__create_customer",
+        "mcp__stripe__create_product",
+        "mcp__stripe__create_payment_link",
+        "mcp__stripe__list_customers"
+      ],
+      "description": "E-commerce operations, payment processing, and customer management",
+      "icon": "shopping-cart",
+      "priority": "high",
+      "category": "business"
+    },
+    "database": {
+      "tools": [
+        "mcp__supabase-mcp-server__execute_sql",
+        "mcp__supabase-mcp-server__list_tables",
+        "mcp__supabase-mcp-server__apply_migration",
+        "mcp__supabase-mcp-server__get_advisors"
+      ],
+      "description": "Database operations, migrations, and backend management",
+      "icon": "database",
+      "priority": "high",
+      "category": "backend"
+    }
+  },
+  "metadata": {
+    "version": "2.0",
+    "lastUpdated": "2025-01-20",
+    "description": "Enhanced Claude Code toolset configuration for AI-powered development",
+    "author": "Nexus Edge Development Team"
+  },
+  "shortcuts": {
+    "dev": ["aiThinking", "webDevelopment", "filesystem"],
+    "design": ["21stDevTools", "deployment", "contextManagement"],
+    "research": ["webSearch", "contextManagement", "aiAssistance"],
+    "business": ["ecommerce", "productivity", "database"]
+  }
+}
